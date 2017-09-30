@@ -5,11 +5,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
-require('dotenv').config()
-
 mongoose.Promise = Promise;
 
 const app = express();
+
+app.use(express.static("public"));
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));

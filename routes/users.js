@@ -2,6 +2,11 @@ const User = require("../models/User.js");
 
 
 module.exports = function (app) {
+  
+  app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+
   app.get("/user/:id", function (req, res) {
     User.find({ "_id": req.params.id }, function (err, data) {
       if (err) {
