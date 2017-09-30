@@ -20,6 +20,8 @@ Expects a JSON of the form below.
 
 Returns JSON with user information example above.
 
+Will add a user if the user_name is taken. Will return an error JSON.
+
 ![Alt text](/READMEImages/ExampleSendJSON.PNG?raw=true "ExampleSendJSON")
 
 ## Put Route
