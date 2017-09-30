@@ -2,15 +2,10 @@ const User = require("../models/User.js");
 
 
 module.exports = function (app) {
-  
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-  });
-
   app.get("/user/:id", function (req, res) {
     User.find({ "_id": req.params.id }, function (err, data) {
       if (err) {
-        console.log(err);
+        console.log("User couldn't be added " + err);
       }
       else {
         res.json(data);
@@ -19,27 +14,34 @@ module.exports = function (app) {
   });
 
   app.post("/user", function (req, res) {
-    if (checkUser(req.body)) {
-      var newUser = new User(req.body);
-      newUser.save(function (err, data) {
-        if (err) {
-          console.log("User couldn't be added " + err);
-          res.json({ "error": err });
-          return;
+    User.find({ "user_name": req.body.user_name }, function (err, data) {
+      if (err) {
+        console.log("User couldn't be added " + err);
+      }
+      else {
+        if (!data.length) {
+          var newUser = new User(req.body);
+          newUser.save(function (err, data) {
+            if (err) {
+              console.log("User couldn't be added " + err);
+              res.json({ "error": err });
+              return;
+            }
+            console.log(data.user_name + " added");
+            res.json(data);
+          })
+        } else {
+          res.json({
+            "error": "Username taken",
+            "_id": data[0].id
+          });
         }
-        console.log(data.user_name + " added");
-        res.json(data);
-      })
-    } else {
-      res.json({ 
-        "error": "Username taken",
-        "_id" : data.user_name
+      }
     });
-    }
   });
 
   app.put("/user/:id", function (req, res) {
-    User.findOneAndUpdate({ _id: req.params.id }, { $set: {"genre_like": req.body.genre_like}  }, { new: true }, function (err, doc) {
+    User.findOneAndUpdate({ _id: req.params.id }, { $set: { "genre_like": req.body.genre_like } }, { new: true }, function (err, doc) {
       if (err) {
         console.log("User couldn't be updated" + err);
         return;
@@ -49,15 +51,8 @@ module.exports = function (app) {
     });
   });
 
-};
-
-function checkUser(bodyJson) {
-  User.find({ "user_name": bodyJson.user_name }, function (err, data) {
-    if (err) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  app.get('*', function (req, res) {
+    res.redirect("/");
   });
-} 
+
+};
