@@ -23,7 +23,9 @@ if (process.env.NODE_ENV === "production") {
 require('./routes/users.js')(app);
 
 //DB Connection
-mongoose.connect("mongodb://localhost/movieTMDB",{
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/movieTMDB",
+  {
   useMongoClient: true,
 });
 var db = mongoose.connection;
