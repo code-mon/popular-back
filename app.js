@@ -26,7 +26,7 @@ require('./routes/users.js')(app);
 
 //DB Connection
 mongoose.connect(
-   "mongodb://localhost/movieTMDB",
+  process.env.MONGODB_URI || "mongodb://localhost/movieTMDB",
   {
   useMongoClient: true,
 });
