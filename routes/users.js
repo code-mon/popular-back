@@ -31,7 +31,10 @@ module.exports = function (app) {
         res.json(data);
       })
     } else {
-      res.json({ "error": "Username taken" });
+      res.json({ 
+        "error": "Username taken",
+        "_id" : data.user_name
+    });
     }
   });
 
