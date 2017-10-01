@@ -44,11 +44,12 @@ module.exports = function (app) {
   app.put("/user/:id", function (req, res) {
     User.findOneAndUpdate({ _id: req.params.id }, { $set: { "genre_like": req.body.genre_like } }, { new: true }, function (err, doc) {
       if (err) {
-        console.log("User couldn't be updated" + err);
+        console.log("User couldn't be updated " + err);
         res.json(err)
-      }
+      } else {
       console.log(doc.user_name + " updated");
       res.json(doc);
+      }
     });
   });
 
