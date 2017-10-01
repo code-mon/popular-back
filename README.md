@@ -20,7 +20,7 @@ Expects a JSON of the form below.
 
 Returns JSON with user information example above.
 
-Will add a user if the user_name is taken. Will return an error JSON.
+Will not add a user if the user_name is taken. Will return an error JSON, that has the _id of the user currently owning the attempeted user name.
 
 ![Alt text](/READMEImages/ExampleSendJSON.PNG?raw=true "ExampleSendJSON")
 
