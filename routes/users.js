@@ -5,16 +5,11 @@ module.exports = function (app) {
   app.get("/user/:id", function (req, res) {
     User.find({ "_id": req.params.id }, function (err, data) {
       if (err) {
-        console.log("User couldn't be added " + err);
+        console.log("User couldn't be found " + err);
+        res.json(err)
       }
       else {
-        if (!data.length) {
-          res.json({
-            "error": "No User Exists"
-          });
-        } else {
           res.json(data);
-        }
       }
     });
   });
@@ -23,6 +18,7 @@ module.exports = function (app) {
     User.find({ "user_name": req.body.user_name }, function (err, data) {
       if (err) {
         console.log("User couldn't be added " + err);
+        res.json(err)
       }
       else {
         if (!data.length) {
@@ -30,8 +26,7 @@ module.exports = function (app) {
           newUser.save(function (err, data) {
             if (err) {
               console.log("User couldn't be added " + err);
-              res.json({ "error": err });
-              return;
+              res.json(err);
             }
             console.log(data.user_name + " added");
             res.json(data);
@@ -50,7 +45,7 @@ module.exports = function (app) {
     User.findOneAndUpdate({ _id: req.params.id }, { $set: { "genre_like": req.body.genre_like } }, { new: true }, function (err, doc) {
       if (err) {
         console.log("User couldn't be updated" + err);
-        return;
+        res.json(err)
       }
       console.log(doc.user_name + " updated");
       res.json(doc);
