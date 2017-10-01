@@ -8,7 +8,13 @@ module.exports = function (app) {
         console.log("User couldn't be added " + err);
       }
       else {
-        res.json(data);
+        if (!data.length) {
+          res.json(data);
+        } else {
+          res.json({
+            "error": "No User Exists"
+          });
+        }
       }
     });
   });
