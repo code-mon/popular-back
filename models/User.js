@@ -19,9 +19,14 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  registered: {
+    type: Boolean,
+    required: true
+  },
   genre_like: [{
-    type: String,
-    required: false
+  }]
+  ,
+  movie_like: [{
   }]
 },{
   timestamps: true
