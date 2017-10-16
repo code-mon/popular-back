@@ -57,7 +57,7 @@ module.exports = function(app) {
 
     const conditions = {
       _id: req.params.id,
-      'genres.genreId': { $ne: req.body.genreId }
+      'genres.name': { $ne: req.body.genre }
     }
 
     const update = {
