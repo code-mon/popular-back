@@ -25,8 +25,11 @@ var UserSchema = new Schema(
       required: true,
       default: false
     },
-    genre_like: [{}],
-    movie_like: [{}]
+    genres: [{
+      genreId: String,
+      name: String
+    }],
+    movies: [{}]
   },
   {
     timestamps: true
