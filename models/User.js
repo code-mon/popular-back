@@ -29,7 +29,10 @@ var UserSchema = new Schema(
       genreId: String,
       name: String
     }],
-    movies: [{}]
+    movies: [{
+      movieId: String,
+      name: String
+    }]
   },
   {
     timestamps: true
