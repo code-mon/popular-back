@@ -49,7 +49,7 @@ module.exports = function(app) {
         });
       })
       .catch(err => {
-        res.json({ error: err.message });
+        res.json({ error: err });
       });
   });
 
