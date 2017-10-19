@@ -49,25 +49,103 @@ module.exports = function(app) {
         });
       })
       .catch(err => {
-        res.json({ error: err.message });
+        res.json({ error: err });
       });
   });
 
-  app.put('/user/:id', function(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.id },
-      { $set: { genre_like: req.body.genre_like } },
-      { new: true },
-      function(err, doc) {
-        if (err) {
-          console.log("User couldn't be updated " + err);
-          res.json(err);
-        } else {
-          console.log(doc.user_name + ' updated');
-          res.json(doc);
+  app.put('/user/genres/:id', function(req, res) {
+    const conditions = {
+      _id: req.params.id,
+      'genres.name': { $ne: req.body.name }
+    };
+
+    const update = {
+      $push: {
+        genres: {
+          name: req.body.name,
+          genreId: req.body.id
         }
       }
-    );
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  app.delete('/user/genres/:id', function(req, res) {
+    console.log('hello' + req.body);
+
+    const conditions = {
+      _id: req.params.id
+      // 'genres.name': { $ne: req.body.name }
+    };
+
+    const update = {
+      $pull: {
+        genres: {
+          name: req.body.name,
+          genreId: req.body.id
+        }
+      }
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  app.put('/user/movies/:id', function(req, res) {
+    const conditions = {
+      _id: req.params.id
+    };
+
+    const update = {
+      $push: {
+        movies: {
+          movieTitle: req.body.movieTitle,
+          movieBackdrop: req.body.movieBackdrop
+        }
+      }
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  app.delete('/user/movies/:id', function(req, res) {
+    const conditions = {
+      _id: req.params.id
+    };
+
+    const update = {
+      $pull: {
+        movies: {
+          movieTitle: req.body.movieTitle
+        }
+      }
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        return res.json(doc);
+      })
+      .catch(err => {
+        return res.json(err);
+      });
   });
 
   const verifyToken = id_token => {
