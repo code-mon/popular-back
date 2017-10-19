@@ -112,7 +112,7 @@ module.exports = function(app) {
       $push: {
         movies: {
           movieTitle: req.body.movieTitle,
-          backdropPath: req.body.backdropPath
+          movieBackdrop: req.body.movieBackdrop
         }
       }
     };
@@ -134,8 +134,7 @@ module.exports = function(app) {
     const update = {
       $pull: {
         movies: {
-          movieTitle: req.body.movieTitle,
-          backdropPath: req.body.backdropPath
+          movieTitle: req.body.movieTitle
         }
       }
     };
