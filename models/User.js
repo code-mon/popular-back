@@ -34,7 +34,7 @@ var UserSchema = new Schema(
     movies: [
       {
         movieTitle: String,
-        backdropPath: String
+        movieBackdrop: String
       }
     ]
   },

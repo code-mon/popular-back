@@ -108,11 +108,13 @@ module.exports = function(app) {
       _id: req.params.id
     };
 
+    console.log(req.body);
+
     const update = {
       $push: {
         movies: {
           movieTitle: req.body.movieTitle,
-          backdropPath: req.body.backdropPath
+          movieBackdrop: req.body.movieBackdrop
         }
       }
     };
@@ -135,7 +137,7 @@ module.exports = function(app) {
       $pull: {
         movies: {
           movieTitle: req.body.movieTitle,
-          backdropPath: req.body.backdropPath
+          movieBackdrop: req.body.movieBackdop
         }
       }
     };
