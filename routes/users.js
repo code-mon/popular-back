@@ -54,63 +54,68 @@ module.exports = function(app) {
   });
 
   app.put('/user/genres/:id', function(req, res) {
-
     const conditions = {
       _id: req.params.id,
       'genres.name': { $ne: req.body.genre }
-    }
+    };
 
     const update = {
       $push: {
         genres: {
           name: req.body.genre,
-          genreId: req.body.genreId  
+          genreId: req.body.genreId
         }
       }
-    }
+    };
 
-    User.findOneAndUpdate(
-      conditions,
-      update,
-      {new: true}
-    )
-    .then(doc => {
-      res.json(doc)
-    })
-    .catch(err => {
-      res.json(err)
-    })
-})
-
-app.put('/user/movies/:id', function(req, res) {
-  
-      const conditions = {
-        _id: req.params.id,
-        'movies.name': { $ne: req.body.movie }
-      }
-  
-      const update = {
-        $push: {
-          movies: {
-            name: req.body.movie,
-            movieId: req.body.movieId  
-          }
-        }
-      }
-  
-      User.findOneAndUpdate(
-        conditions,
-        update,
-        {new: true}
-      )
+    User.findOneAndUpdate(conditions, update, { new: true })
       .then(doc => {
-        res.json(doc)
+        res.json(doc);
       })
       .catch(err => {
-        res.json(err)
-      })
-  })
+        res.json(err);
+      });
+  });
 
+  app.put('/user/movies/:id', function(req, res) {
+    const conditions = {
+      _id: req.params.id
+    };
+
+    const update = {
+      $push: {
+        movies: req.body.movie
+      }
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  app.delete('/user/movies/:id', function(req, res) {
+    const conditions = {
+      _id: req.params.id
+    };
+
+    const update = {
+      $pullAll: {
+        movies: [req.body.movie]
+      }
+    };
+
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        return res.json(doc);
+      })
+      .catch(err => {
+        return res.json(err);
+      });
+  });
 
   const verifyToken = id_token => {
     return new Promise((resolve, reject) => {
