@@ -13,6 +13,10 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/tester', function(req, res) {
+    res.json({"test":"test"})
+  });
+
   app.post('/user', function(req, res) {
     // check if token is valid
     const id_token = req.body.id_token;
