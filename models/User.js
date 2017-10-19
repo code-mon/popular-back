@@ -25,14 +25,13 @@ var UserSchema = new Schema(
       required: true,
       default: false
     },
-    genres: [{
-      genreId: String,
-      name: String
-    }],
-    movies: [{
-      movieId: String,
-      name: String
-    }]
+    genres: [
+      {
+        genreId: String,
+        name: String
+      }
+    ],
+    movies: []
   },
   {
     timestamps: true
