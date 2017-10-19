@@ -31,7 +31,12 @@ var UserSchema = new Schema(
         name: String
       }
     ],
-    movies: []
+    movies: [
+      {
+        movieTitle: String,
+        backdropPath: String
+      }
+    ]
   },
   {
     timestamps: true

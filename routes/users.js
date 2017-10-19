@@ -57,44 +57,39 @@ module.exports = function(app) {
     const conditions = {
       _id: req.params.id,
       'genres.name': { $ne: req.body.name }
-    }
+    };
 
     const update = {
       $push: {
         genres: {
           name: req.body.name,
-          genreId: req.body.id  
+          genreId: req.body.id
         }
       }
-    }
+    };
 
-    User.findOneAndUpdate(
-      conditions,
-      update,
-      {new: true}
-    )
-    .then(doc => {
-      res.json(doc)
-    })
-    .catch(err => {
-      res.json(err)
-    })
-})
+    User.findOneAndUpdate(conditions, update, { new: true })
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
 
   app.delete('/user/genres/:id', function(req, res) {
-
-    console.log( 'hello' + req.body );
+    console.log('hello' + req.body);
 
     const conditions = {
-      _id: req.params.id,
+      _id: req.params.id
       // 'genres.name': { $ne: req.body.name }
-    }
+    };
 
     const update = {
       $pull: {
         genres: {
           name: req.body.name,
-          genreId: req.body.id  
+          genreId: req.body.id
         }
       }
     };
@@ -115,7 +110,10 @@ module.exports = function(app) {
 
     const update = {
       $push: {
-        movies: req.body.movie
+        movies: {
+          movieTitle: req.body.movieTitle,
+          backdropPath: req.body.backdropPath
+        }
       }
     };
 
@@ -134,8 +132,11 @@ module.exports = function(app) {
     };
 
     const update = {
-      $pullAll: {
-        movies: [req.body.movie]
+      $pull: {
+        movies: {
+          movieTitle: req.body.movieTitle,
+          backdropPath: req.body.backdropPath
+        }
       }
     };
 
