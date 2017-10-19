@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
-app.use(cors({origin: 'https://popular.netlify.com'}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
